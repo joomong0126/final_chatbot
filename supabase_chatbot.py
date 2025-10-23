@@ -22,11 +22,12 @@ st.set_page_config(
 def init_supabase():
     """Supabase 클라이언트 초기화"""
     try:
-        url = os.getenv("SUPABASE_URL")
-        key = os.getenv("SUPABASE_KEY")  # .env 파일의 실제 변수명에 맞춤
+        # 환경변수 또는 하드코딩된 값 사용
+        url = os.getenv("SUPABASE_URL") or "https://kqzdrorzgsmqavxdaeos.supabase.co"
+        key = os.getenv("SUPABASE_KEY") or "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxemRyb3J6Z3NtcWF2eGRhZW9zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA1NjU4MDMsImV4cCI6MjA3NjE0MTgwM30.3Rbz6Yp7KLzybtIe93yy37LVfxRObx4XuPHavqqz468"
         
         if not url or not key:
-            st.error("❌ 환경변수를 확인하세요: SUPABASE_URL, SUPABASE_KEY")
+            st.error("❌ Supabase 설정을 확인하세요.")
             return None
         
         return create_client(url, key)
@@ -216,7 +217,7 @@ def generate_ai_response(question, data_df, data_type):
     # AI 모델 초기화
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
-        return "❌ GOOGLE_API_KEY 환경변수를 설정하세요."
+        return "❌ GOOGLE_API_KEY 설정을 확인하세요."
     
     try:
         llm = ChatGoogleGenerativeAI(
